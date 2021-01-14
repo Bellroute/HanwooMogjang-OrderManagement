@@ -2,8 +2,7 @@
   <div class="home">
     <h2 style="text-align: center;">선물 포장 주문 현황</h2>
     <DateNavigation />
-    <hr />
-    <div class="main_filter"></div>
+    <OrderFilter />
     <MainSchedule />
   </div>
 </template>
@@ -11,12 +10,14 @@
 <script>
 import DateNavigation from "@/components/DateNavigation.vue";
 import MainSchedule from "@/components/MainSchedule.vue";
+import OrderFilter from "@/components/OrderFilter.vue";
 
 export default {
   name: "Home",
   components: {
     DateNavigation,
-    MainSchedule
+    MainSchedule,
+    OrderFilter
   }
 };
 </script>

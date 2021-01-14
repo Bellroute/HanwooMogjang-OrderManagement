@@ -98,7 +98,7 @@ li {
   align-items: center;
   flex-wrap: nowrap;
   justify-content: space-between;
-  padding: 15px 15px;
+  padding: 30px 15px;
 }
 
 a {
@@ -118,10 +118,6 @@ a {
 .order-item {
   text-align: left;
   width: 70%;
-}
-
-.list-schedule-item {
-  padding: 15px;
 }
 
 .order-info {
