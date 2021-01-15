@@ -22,13 +22,14 @@ export default {
 body {
   align-content: center;
   text-align: center;
-  background: whitesmoke;
+  background: white;
 }
 
 html,
 body,
 #app {
   height: 100%;
+  background: whitesmoke;
 }
 
 html,

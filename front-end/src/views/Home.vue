@@ -1,13 +1,19 @@
 <template>
   <div class="home">
-    <h2 style="text-align: center;">선물 포장 주문 현황</h2>
+    <h1 style="text-align: center;">주문 진행 현황</h1>
     <DateNavigation v-on:event-data="fetchDate" />
     <OrderFilter
       :ordersNumber="ordersNumber"
       v-on:filter-status="fetchStatus"
       v-on:filter-type="fetchType"
     />
-    <MainSchedule :orderList="orderList" />
+    <MainSchedule v-if="orderList.length !== 0" :orderList="orderList" />
+    <div id="empty-order-page" v-else>
+      <h3>
+        등록된 주문이 없습니다.
+      </h3>
+      <p>다른 날짜 혹은 다른 검색 조건을 적용해보세요 :)</p>
+    </div>
   </div>
 </template>
 
@@ -97,10 +103,10 @@ export default {
   margin-right: 15%;
   padding: 3%;
   background: white;
-  height: 80%;
+  height: fit-content;
 }
 
-h2 {
+h1 {
   padding-top: 1%;
   padding-bottom: 5%;
 }

@@ -8,7 +8,11 @@
               class="dates"
               v-for="(item, i) in dates"
               v-bind:key="i"
-              :class="{ blue: item.today == '토', red: item.today == '일' }"
+              :class="{
+                blue: item.today == '토',
+                red: item.today == '일',
+                selected: item.date === selectedDate
+              }"
               @click="dateShcedules(item)"
             >
               <p>{{ item.date }}</p>
@@ -64,6 +68,7 @@
 }
 
 .dates {
+  padding: 10px 0px;
   cursor: pointer;
 }
 
@@ -73,6 +78,12 @@
 
 .dates > span {
   font-size: 15px;
+}
+
+.selected {
+  background-color: #3534a5;
+  color: white;
+  border-radius: 10px;
 }
 </style>
 
@@ -95,7 +106,7 @@ export default {
         prevArrow: "<button type='button' class='slick-prev'><</button>",
         nextArrow: "<button type='button' class='slick-next'>></button>"
       },
-      dates: []
+      selectedDate: []
     };
   },
   created() {
@@ -104,18 +115,28 @@ export default {
     var limitDay = 14;
     var weeks = ["일", "월", "화", "수", "목", "금", "토"];
 
+    function addDays(date, days) {
+      var result = new Date(date);
+      result.setDate(result.getDate() + days);
+      return result;
+    }
+
     for (var i = 0; i < limitDay; i++) {
+      var nextDay = addDays(today, i);
+
       items.push({
-        date: today.getDate() + i,
-        today: weeks[(today.getDay() + i) % 7]
+        date: nextDay.getDate(),
+        today: weeks[nextDay.getDay() % 7]
       });
     }
 
     this.dates = items;
+    this.selectedDate = today.getDate();
   },
   methods: {
     dateShcedules: function(item) {
       const selectedDate = item.date;
+      this.selectedDate = selectedDate;
       this.$emit("event-data", selectedDate);
     }
   }

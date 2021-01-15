@@ -47,6 +47,10 @@ export default {
 </script>
 
 <style>
+#empty-order-page {
+  padding: 20px;
+}
+
 ol,
 ul,
 li {
