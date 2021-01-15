@@ -4,8 +4,8 @@
       <ul>
         <li v-for="(orderType, i) in orderTypes" v-bind:key="i">
           <a
-            @click="clickMainFilter(i)"
-            :class="{ active: i === selectedType }"
+            @click="clickTypeFilter(orderType)"
+            :class="{ active: orderType === selectedType }"
             >{{ orderType }}</a
           >
         </li>
@@ -19,7 +19,13 @@
         </p>
       </div>
       <div class="filter--status">
-        <span>전체</span>
+        <span
+          v-for="(status, i) in orderStatuses"
+          v-bind:key="i"
+          @click="clickStatusFilter(status)"
+          :class="{ active: status === selectedStatus }"
+          >{{ status }}</span
+        >
       </div>
     </div>
   </div>
@@ -31,21 +37,31 @@ export default {
   props: ["ordersNumber"],
   data() {
     return {
-      selectedType: null,
+      selectedType: "",
+      selectedStatus: "",
       orderTypes: ["전체", "직접 수령", "배송"],
-      orderStatuses: ["전체", "준비", "수령 대기", "배송 대기", "완료"]
+      orderStatuses: ["전체", "준비", "대기", "완료"]
     };
   },
   created: function() {
     var v = this;
-    v.clickMainFilter(0);
+    v.clickTypeFilter(this.orderTypes[0]);
+    v.clickStatusFilter(this.orderStatuses[0]);
   },
   methods: {
-    clickMainFilter: function(type) {
+    clickTypeFilter: function(type) {
       var v = this;
       if (type !== undefined) {
         v.selectedType = type;
       }
+      this.$emit("filter-type", type);
+    },
+    clickStatusFilter: function(status) {
+      var v = this;
+      if (status !== undefined) {
+        v.selectedStatus = status;
+      }
+      this.$emit("filter-status", status);
     }
   }
 };
@@ -112,21 +128,9 @@ export default {
 .filter--status span {
   font-size: 14px;
   margin-left: 10px;
-  padding: 2px 15px 2px 3px;
+  padding: 5px 10px;
   position: relative;
   cursor: pointer;
-}
-
-.filter--status span::after {
-  content: "";
-  border: solid #333;
-  border-width: 0 1px 1px 0;
-  display: inline-block;
-  padding: 3px;
-  position: absolute;
-  right: 2px;
-  bottom: 10px;
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
+  border-radius: 20px;
 }
 </style>

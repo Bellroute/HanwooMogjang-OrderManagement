@@ -14,7 +14,7 @@ const mockOrders = [
   },
   {
     id: 2,
-    type: '배송',
+    type: '직접 수령',
     item: '소고기 구이용 15kg - 15만원',
     date: new Date().getDate(),
     time: '21:00',
@@ -40,9 +40,21 @@ const mockOrders = [
   }
 ];
 
-const findOrdersByDate = async date => {
+const findOrders = async (date, status, type) => {
+  orders = mockOrders;
+
+  if (date !== undefined) {
+    orders = orders.filter(order => order.date == date);
+  }
+  if (status !== undefined) {
+    orders = orders.filter(order => order.status === status);
+  }
+  if (type !== undefined) {
+    orders = orders.filter(order => order.type === type);
+  }
+
   try {
-    return mockOrders.filter(order => order.date == date);
+    return orders;
   } catch (error) {
     throw Error(error.message);
   }
@@ -99,7 +111,7 @@ const changeStatus = async (id, typeCode) => {
 };
 
 module.exports = {
-  findOrdersByDate,
+  findOrders,
   findOrdersById,
   createOrder,
   updateOrder,

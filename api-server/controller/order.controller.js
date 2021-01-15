@@ -1,10 +1,12 @@
 const orderService = require('../service/order.service');
 
 const getOrders = async (req, res) => {
-  const date = req.query.date ? req.query.date : new Date().getDate();
+  const date = req.query.date;
+  const status = req.query.status;
+  const type = req.query.type;
 
   try {
-    const orders = await orderService.findOrdersByDate(date);
+    const orders = await orderService.findOrders(date, status, type);
 
     return res.status(200).json({ orders });
   } catch (error) {
