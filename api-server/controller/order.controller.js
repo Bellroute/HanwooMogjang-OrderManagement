@@ -1,12 +1,12 @@
 const orderService = require('../service/order.service');
 
 const getOrders = async (req, res) => {
-  const date = req.query.date ? req.query.date : new Date();
+  const date = req.query.date ? req.query.date : new Date().getDate();
 
   try {
     const orders = await orderService.findOrdersByDate(date);
 
-    return res.status(200).json({ status: 200, data: orders });
+    return res.status(200).json({ orders });
   } catch (error) {
     return res.status(500).json({ status: 500, message: error.message });
   }
@@ -19,8 +19,7 @@ const getOrder = async (req, res) => {
     const order = await orderService.findOrdersById(id);
 
     return res.status(200).json({
-      status: 200,
-      data: order
+      order
     });
   } catch (error) {
     return res.status(500).json({ status: 500, message: error.message });

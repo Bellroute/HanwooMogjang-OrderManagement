@@ -3,7 +3,8 @@ const mockOrders = [
     id: 1,
     type: '배송',
     item: '소고기 구이용 15kg - 15만원',
-    date: Date.now(),
+    date: new Date().getDate(),
+    time: '20:00',
     orderName: '벨루트',
     orderCallNumber: '010-0000-0000',
     recipient: '김피먹',
@@ -15,31 +16,33 @@ const mockOrders = [
     id: 2,
     type: '배송',
     item: '소고기 구이용 15kg - 15만원',
-    date: Date.now(),
+    date: new Date().getDate(),
+    time: '21:00',
     orderName: '벨루트',
     orderCallNumber: '010-0000-0000',
     recipient: '김피먹',
     recipientAddress: '광주 동구 피먹동 100',
     etc: '',
-    status: '준비'
+    status: '완료'
   },
   {
     id: 3,
     type: '배송',
     item: '소고기 구이용 15kg - 15만원',
-    date: Date.now(),
+    date: new Date().getDate() + 1,
+    time: '20:00',
     orderName: '벨루트',
     orderCallNumber: '010-0000-0000',
     recipient: '김피먹',
     recipientAddress: '광주 동구 피먹동 100',
     etc: '',
-    status: '준비'
+    status: '배송 대기'
   }
 ];
 
 const findOrdersByDate = async date => {
   try {
-    return mockOrders;
+    return mockOrders.filter(order => order.date == date);
   } catch (error) {
     throw Error(error.message);
   }

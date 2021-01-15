@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <h2 style="text-align: center;">선물 포장 주문 현황</h2>
-    <DateNavigation />
-    <OrderFilter />
-    <MainSchedule />
+    <DateNavigation v-on:event-data="getOrderList" />
+    <OrderFilter :ordersNumber="ordersNumber" />
+    <MainSchedule :orderList="orderList" />
   </div>
 </template>
 
@@ -11,6 +11,7 @@
 import DateNavigation from "@/components/DateNavigation.vue";
 import MainSchedule from "@/components/MainSchedule.vue";
 import OrderFilter from "@/components/OrderFilter.vue";
+import axios from "axios";
 
 export default {
   name: "Home",
@@ -18,6 +19,31 @@ export default {
     DateNavigation,
     MainSchedule,
     OrderFilter
+  },
+  data() {
+    return {
+      orderList: [],
+      ordersNumber: 0
+    };
+  },
+  mounted() {
+    this.getOrderList();
+  },
+  methods: {
+    getOrderList: async function(date) {
+      const baseURI = "http://localhost:8080";
+      var query = "?date=" + date;
+
+      if (date == null) {
+        query = "";
+      }
+
+      await axios.get(`${baseURI}/api/orders${query}`).then(result => {
+        console.log(result);
+        this.orderList = result.data.orders;
+        this.ordersNumber = this.orderList.length;
+      });
+    }
   }
 };
 </script>

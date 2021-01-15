@@ -114,8 +114,9 @@ export default {
     this.dates = items;
   },
   methods: {
-    dateShcedules: item => {
-      alert(item.date + " " + item.today);
+    dateShcedules: function(item) {
+      const selectedDate = item.date;
+      this.$emit("event-data", selectedDate);
     }
   }
 };

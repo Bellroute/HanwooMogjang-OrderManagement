@@ -4,8 +4,11 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.use(logger('dev'));
 app.use(express.json());

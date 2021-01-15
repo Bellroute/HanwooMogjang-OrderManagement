@@ -3,14 +3,19 @@
     <div class="main__order-filter">
       <ul>
         <li v-for="(orderType, i) in orderTypes" v-bind:key="i">
-          <a @click="clickMainFilter(i)" :class="{active : i === selectedType}">{{ orderType }}</a>
+          <a
+            @click="clickMainFilter(i)"
+            :class="{ active: i === selectedType }"
+            >{{ orderType }}</a
+          >
         </li>
       </ul>
     </div>
     <div class="main--order-filter">
       <div class="filter--results">
         <p>
-          <strong style="padding-right: 3px">3</strong>개의 주문
+          <strong style="padding-right: 3px">{{ ordersNumber }}</strong
+          >개의 주문
         </p>
       </div>
       <div class="filter--status">
@@ -23,6 +28,7 @@
 <script>
 export default {
   name: "OrderFilter",
+  props: ["ordersNumber"],
   data() {
     return {
       selectedType: null,
