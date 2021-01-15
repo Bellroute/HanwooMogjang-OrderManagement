@@ -5,9 +5,26 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+mongoose.connect(
+  `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?authSource=admin`,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  }
+);
+const db = mongoose.connection;
+db.on('error', console.error);
+db.once('open', () => {
+  console.log('connected to mongoDB server');
+});
 app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.use(logger('dev'));
@@ -42,5 +59,41 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.send(error.message);
 });
+
+// var Order = require('../api-server/model/order');
+
+// for (var i = 0; i < 3; i++) {
+//   var order = new Order({
+//     item: '소고기 구이용 15kg - 15만원',
+//     type: '배송',
+//     date: new Date().getDate() + 1,
+//     time: '20:00',
+//     orderName: '벨루트',
+//     orderCallNumber: '010-0000-0000',
+//     recipient: '김피먹',
+//     recipientAddress: '광주 동구 피먹동 100',
+//     etc: '',
+//     status: '완료'
+//   });
+
+//   order.save().then(() => {
+//     console.log('save success');
+//   });
+
+//   order = new Order({
+//     item: '소고기 구이용 15kg - 15만원',
+//     type: '직접 수령',
+//     date: new Date().getDate() + 1,
+//     time: '20:00',
+//     orderName: '벨루트',
+//     orderCallNumber: '010-0000-0000',
+//     etc: '',
+//     status: '수령 대기'
+//   });
+
+//   order.save().then(() => {
+//     console.log('save success');
+//   });
+// }
 
 module.exports = app;

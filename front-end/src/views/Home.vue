@@ -7,7 +7,12 @@
       v-on:filter-status="fetchStatus"
       v-on:filter-type="fetchType"
     />
-    <MainSchedule v-if="orderList.length !== 0" :orderList="orderList" />
+    <MainSchedule
+      v-if="orderList.length !== 0"
+      :orderList="orderList"
+      v-on:change-status-wait="changeStatusWait"
+      v-on:change-status-done="changeStatusDone"
+    />
     <div id="empty-order-page" v-else>
       <h3>
         등록된 주문이 없습니다.
@@ -92,6 +97,22 @@ export default {
         paramStatus +
         this.status
       );
+    },
+    changeStatusWait: async function(id) {
+      const baseURI = "http://localhost:8080";
+      var url = id + "/wait";
+
+      await axios.put(`${baseURI}/api/orders/` + url).then(result => {
+        console.log(result);
+      });
+    },
+    changeStatusDone: async function(id) {
+      const baseURI = "http://localhost:8080";
+      var url = id + "/done";
+
+      await axios.put(`${baseURI}/api/orders/` + url).then(result => {
+        console.log(result);
+      });
     }
   }
 };

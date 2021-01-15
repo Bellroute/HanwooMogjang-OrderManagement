@@ -24,6 +24,7 @@
           <div class="status">
             <div
               class="order-status"
+              @click="changeStatus(order)"
               :class="{
                 isReady: order.status.includes('준비'),
                 isWait: order.status.includes('대기'),
@@ -42,7 +43,36 @@
 <script>
 export default {
   name: "MainSchedule",
-  props: ["orderList"]
+  props: ["orderList"],
+  methods: {
+    isConfirmed: function() {
+      if (
+        confirm("선택한 주문에 대한 진행 현황을 변경하시겠습니까?") === true
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    changeStatus: function(order) {
+      if (order.status.includes("준비")) {
+        if (this.isConfirmed()) {
+          if (order.type === "배송") {
+            order.status = "배송 대기";
+          } else {
+            order.status = "수령 대기";
+          }
+          this.$emit("change-status-wait", order.id);
+        }
+      } else if (order.status.includes("대기")) {
+        if (this.isConfirmed()) {
+          order.status = "완료";
+          this.$emit("change-status-done", order.id);
+        }
+      } else {
+      }
+    }
+  }
 };
 </script>
 

@@ -18,7 +18,7 @@ const getOrder = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const order = await orderService.findOrdersById(id);
+    const order = await orderService.findOrderById(id);
 
     return res.status(200).json({
       order

@@ -24,12 +24,12 @@ router.delete('/:id', OrderController.deleteOrder);
 
 // 주문 상태 변경
 // PUT /api/orders/:id/ready
-router.get('/:id/ready', OrderController.changeStatusToReady);
+router.put('/:id/ready', OrderController.changeStatusToReady);
 
 // PUT /api/orders/:id/wait
-router.get('/:id/wait', OrderController.changeStatusToWait);
+router.put('/:id/wait', OrderController.changeStatusToWait);
 
 // PUT /api/orders/:id/done
-router.get('/:id/done', OrderController.changeStatusToDone);
+router.put('/:id/done', OrderController.changeStatusToDone);
 
 module.exports = router;

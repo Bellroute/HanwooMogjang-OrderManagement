@@ -1,53 +1,15 @@
-const mockOrders = [
-  {
-    id: 1,
-    type: '배송',
-    item: '소고기 구이용 15kg - 15만원',
-    date: new Date().getDate(),
-    time: '20:00',
-    orderName: '벨루트',
-    orderCallNumber: '010-0000-0000',
-    recipient: '김피먹',
-    recipientAddress: '광주 동구 피먹동 100',
-    etc: '',
-    status: '준비'
-  },
-  {
-    id: 2,
-    type: '직접 수령',
-    item: '소고기 구이용 15kg - 15만원',
-    date: new Date().getDate(),
-    time: '21:00',
-    orderName: '벨루트',
-    orderCallNumber: '010-0000-0000',
-    recipient: '김피먹',
-    recipientAddress: '광주 동구 피먹동 100',
-    etc: '',
-    status: '완료'
-  },
-  {
-    id: 3,
-    type: '배송',
-    item: '소고기 구이용 15kg - 15만원',
-    date: new Date().getDate() + 1,
-    time: '20:00',
-    orderName: '벨루트',
-    orderCallNumber: '010-0000-0000',
-    recipient: '김피먹',
-    recipientAddress: '광주 동구 피먹동 100',
-    etc: '',
-    status: '배송 대기'
-  }
-];
+const mongoose = require('mongoose');
+var Order = require('../model/order');
 
 const findOrders = async (date, status, type) => {
-  orders = mockOrders;
+  orders = await Order.findAllByDate(date)
+    .then(foundOrders => {
+      return foundOrders;
+    })
+    .catch(err => console.log(err));
 
-  if (date !== undefined) {
-    orders = orders.filter(order => order.date == date);
-  }
   if (status !== undefined) {
-    orders = orders.filter(order => order.status === status);
+    orders = orders.filter(order => order.status.includes(status));
   }
   if (type !== undefined) {
     orders = orders.filter(order => order.type === type);
@@ -60,9 +22,16 @@ const findOrders = async (date, status, type) => {
   }
 };
 
-const findOrdersById = async id => {
+const findOrderById = async id => {
   try {
-    return mockOrders[0];
+    return Order.findById({ _id: id }, function(error, order) {
+      console.log('--- Read one ---');
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(order);
+      }
+    });
   } catch (error) {
     throw Error(error.message);
   }
@@ -112,7 +81,7 @@ const changeStatus = async (id, typeCode) => {
 
 module.exports = {
   findOrders,
-  findOrdersById,
+  findOrderById,
   createOrder,
   updateOrder,
   deleteOrder,
