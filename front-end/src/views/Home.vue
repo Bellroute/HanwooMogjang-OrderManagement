@@ -14,9 +14,7 @@
       v-on:change-status-done="changeStatusDone"
     />
     <div id="empty-order-page" v-else>
-      <h3>
-        등록된 주문이 없습니다.
-      </h3>
+      <h3>등록된 주문이 없습니다.</h3>
       <p>다른 날짜 혹은 다른 검색 조건을 적용해보세요 :)</p>
     </div>
   </div>

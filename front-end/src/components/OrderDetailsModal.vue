@@ -1,0 +1,210 @@
+<template>
+  <div class="modal">
+    <div class="overlay" @click="$emit('close-modal')"></div>
+    <div class="modal-card">
+      <div class="card-title">
+        <a style="margin: 10px">주문 상세 정보</a>
+      </div>
+      <div>
+        <div class="info-box">
+          <div class="info-title">
+            <h4>주문 정보</h4>
+          </div>
+          <div class="info-detail">
+            <div class="detail-main">
+              <span class="item">소고기 구이용 15kg - 15만원</span>
+              <span class="detail-type isDelivery">배송</span>
+              <span class="detail-type isPickup">직접 수령</span>
+            </div>
+            <div>
+              <span class="detail-name">희망 수령 시간:</span>
+              <span class="detail">20:00</span>
+            </div>
+            <div>
+              <span class="detail-name">진행 현황:</span>
+              <span class="detail">준비</span>
+            </div>
+          </div>
+        </div>
+        <div class="info-box">
+          <div class="info-title">
+            <h4>주문자 정보</h4>
+          </div>
+          <div class="info-detail">
+            <div>
+              <span class="detail-name">주문자명:</span>
+              <span class="detail">벨루트</span>
+            </div>
+            <div>
+              <span class="detail-name">연락처:</span>
+              <span class="detail">010-0000-0000</span>
+            </div>
+          </div>
+        </div>
+        <div class="info-box">
+          <div class="info-title">
+            <h4>배송 정보</h4>
+          </div>
+          <div class="info-detail">
+            <div>
+              <span class="detail-name">받는 사람:</span>
+              <span class="detail">김피먹</span>
+            </div>
+            <div>
+              <span class="detail-name">연락처:</span>
+              <span class="detail">010-0000-0000</span>
+            </div>
+            <div>
+              <span class="detail-name">배송지:</span>
+              <span class="detail">광주 동구 피먹동 200</span>
+            </div>
+          </div>
+        </div>
+        <div class="info-box">
+          <div class="info-title">
+            <h4>요청 사항</h4>
+          </div>
+          <div class="info-detail">
+            <div class="detail-name">보냉 박스, 보자기 넣어주세요</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span class="btn btn-edit">수정</span>
+        <span class="btn btn-remove">삭제</span>
+        <span class="btn btn-close" @click="$emit('close-modal')">닫기</span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "OrderDetailsModal"
+};
+</script>
+
+<style>
+.card-title {
+  padding: 20px;
+  color: black;
+  background: white;
+  padding-bottom: 30px;
+}
+.card-title > a {
+  border-bottom: 2px solid black;
+  padding-bottom: 10px;
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: -1px;
+}
+
+.modal,
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+.overlay {
+  opacity: 0.5;
+  background-color: black;
+}
+.modal-card {
+  text-align: left;
+  position: relative;
+  max-width: 80%;
+  margin: auto;
+  margin-top: 30px;
+  padding: 20px;
+  background-color: whitesmoke;
+  min-height: 500px;
+  z-index: 10;
+  opacity: 1;
+  letter-spacing: -1px;
+}
+.info-box {
+  margin-bottom: 10px;
+  background-color: white;
+  padding: 10px 20px;
+  min-height: 100px;
+}
+
+.info-title {
+  margin: 10px;
+  color: #20232c;
+  font-size: 16px;
+  letter-spacing: -1px;
+  border-bottom: 1px solid #ddd;
+}
+
+.info-detail {
+  margin: 10px;
+}
+
+.detail-name {
+  color: #20232c;
+  font-size: 17px;
+  margin-right: 20px;
+}
+
+.detail {
+  color: #20232c;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.item {
+  color: #20232c;
+  font-size: 30px;
+  font-weight: bold;
+  padding-right: 10px;
+}
+
+.detail-main {
+  padding-bottom: 10px;
+}
+
+.detail-type {
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+.isDelivery {
+  background-color: #ffc645;
+}
+
+.isPickup {
+  background-color: lightgreen;
+}
+
+.modal-footer {
+  text-align: right;
+  padding: 10px;
+}
+
+.btn {
+  width: 20%;
+  text-align: center;
+  margin-left: 10px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.btn-edit {
+  background-color: #4169e1;
+}
+
+.btn-remove {
+  background-color: #ea3e42;
+}
+
+.btn-close {
+  background-color: darkgray;
+}
+</style>

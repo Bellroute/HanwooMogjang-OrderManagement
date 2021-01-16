@@ -1,16 +1,12 @@
 <template>
   <div>
     <ul>
-      <li
-        class="list-schedule-item"
-        v-for="order in orderList"
-        v-bind:key="order.id"
-      >
+      <li class="list-schedule-item" v-for="order in orderList" v-bind:key="order.id">
         <a>
           <div class="order-time">
             <p>{{ order.time }}</p>
           </div>
-          <div class="order-item">
+          <div class="order-item" @click="isModalViewed = true">
             <div>
               <h3>{{ order.item }}</h3>
             </div>
@@ -37,13 +33,24 @@
         </a>
       </li>
     </ul>
+    <OrderDetailsModal v-if="isModalViewed" @close-modal="isModalViewed = false" />
   </div>
 </template>
 
 <script>
+import OrderDetailsModal from "@/components/OrderDetailsModal.vue";
+
 export default {
   name: "MainSchedule",
   props: ["orderList"],
+  components: {
+    OrderDetailsModal
+  },
+  data() {
+    return {
+      isModalViewed: false
+    };
+  },
   methods: {
     isConfirmed: function() {
       if (
