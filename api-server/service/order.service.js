@@ -65,7 +65,7 @@ const updateOrder = async (id, data) => {
 
 const deleteOrder = async id => {
   try {
-    console.log('삭제');
+    orders = await Order.delete(id).then(console.log('삭제: id-', id));
   } catch (error) {
     throw Error(error.message);
   }

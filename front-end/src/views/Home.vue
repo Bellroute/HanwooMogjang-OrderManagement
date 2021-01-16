@@ -12,6 +12,7 @@
       :orderList="orderList"
       v-on:change-status-wait="changeStatusWait"
       v-on:change-status-done="changeStatusDone"
+      v-on:delete-order="deleteOrder"
     />
     <div id="empty-order-page" v-else>
       <h3>등록된 주문이 없습니다.</h3>
@@ -111,6 +112,14 @@ export default {
       await axios.put(`${baseURI}/api/orders/` + url).then(result => {
         console.log(result);
       });
+    },
+    deleteOrder: async function(id) {
+      const baseURI = "http://localhost:8080";
+
+      axios.delete(`${baseURI}/api/orders/` + id).then(result => {
+        console.log(result);
+        this.ordersNumber = this.orderList.length;
+      });
     }
   }
 };
@@ -127,6 +136,6 @@ export default {
 
 h1 {
   padding-top: 1%;
-  padding-bottom: 5%;
+  padding-bottom: 1%;
 }
 </style>

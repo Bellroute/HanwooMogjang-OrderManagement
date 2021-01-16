@@ -22,5 +22,9 @@ orderSchema.statics.findAllByDate = async function(date) {
   return await this.find({ date: date });
 };
 
+orderSchema.statics.delete = async function(id) {
+  return await this.remove({ _id: id });
+};
+
 var Order = mongoose.model('Order', orderSchema);
 module.exports = Order;

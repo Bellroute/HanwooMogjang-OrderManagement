@@ -27,8 +27,8 @@
 
 <style>
 #dateNav {
-  padding-top: 3%;
-  padding-bottom: 3%;
+  padding-top: 2%;
+  padding-bottom: 2%;
 }
 
 .slick-prev,

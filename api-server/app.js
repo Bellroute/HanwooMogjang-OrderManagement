@@ -60,40 +60,40 @@ app.use(function(err, req, res, next) {
   res.send(error.message);
 });
 
-// var Order = require('../api-server/model/order');
+var Order = require('../api-server/model/order');
 
-// for (var i = 0; i < 3; i++) {
-//   var order = new Order({
-//     item: '소고기 구이용 15kg - 15만원',
-//     type: '배송',
-//     date: new Date().getDate() + 1,
-//     time: '20:00',
-//     orderName: '벨루트',
-//     orderCallNumber: '010-0000-0000',
-//     recipient: '김피먹',
-//     recipientAddress: '광주 동구 피먹동 100',
-//     etc: '',
-//     status: '완료'
-//   });
+for (var i = 0; i < 3; i++) {
+  var order = new Order({
+    item: '소고기 구이용 15kg - 15만원',
+    type: '배송',
+    date: new Date().getDate() + 1,
+    time: '20:00',
+    orderName: '벨루트',
+    orderCallNumber: '010-0000-0000',
+    recipient: '김피먹',
+    recipientAddress: '광주 동구 피먹동 100',
+    etc: '아이스박스 준비해주세요',
+    status: '준비'
+  });
 
-//   order.save().then(() => {
-//     console.log('save success');
-//   });
+  order.save().then(() => {
+    console.log('save success');
+  });
 
-//   order = new Order({
-//     item: '소고기 구이용 15kg - 15만원',
-//     type: '직접 수령',
-//     date: new Date().getDate() + 1,
-//     time: '20:00',
-//     orderName: '벨루트',
-//     orderCallNumber: '010-0000-0000',
-//     etc: '',
-//     status: '수령 대기'
-//   });
+  order = new Order({
+    item: '소고기 구이용 15kg - 15만원',
+    type: '직접 수령',
+    date: new Date().getDate() + 1,
+    time: '20:00',
+    orderName: '벨루트',
+    orderCallNumber: '010-0000-0000',
+    etc: '아이스박스 준비해주세요',
+    status: '수령 대기'
+  });
 
-//   order.save().then(() => {
-//     console.log('save success');
-//   });
-// }
+  order.save().then(() => {
+    console.log('save success');
+  });
+}
 
 module.exports = app;

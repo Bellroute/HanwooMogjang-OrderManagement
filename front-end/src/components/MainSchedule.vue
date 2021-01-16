@@ -1,20 +1,20 @@
 <template>
   <div>
     <ul>
-      <li class="list-schedule-item" v-for="order in orderList" v-bind:key="order.id">
+      <li class="list-schedule-item" v-for="(order, i) in orderList" v-bind:key="i">
         <a>
           <div class="order-time">
             <p>{{ order.time }}</p>
           </div>
-          <div class="order-item" @click="isModalViewed = true">
+          <div class="order-item" @click="showModal(order)">
             <div>
               <h3>{{ order.item }}</h3>
             </div>
             <div class="order-info">
               <span>주문자:</span>
-              <span>{{ order.orderName }}</span>
+              <span style="font-weight: bold;">{{ order.orderName }}</span>
               <span>연락처:</span>
-              <span>{{ order.orderCallNumber }}</span>
+              <span style="font-weight: bold;">{{ order.orderCallNumber }}</span>
             </div>
           </div>
           <div class="status">
@@ -33,7 +33,12 @@
         </a>
       </li>
     </ul>
-    <OrderDetailsModal v-if="isModalViewed" @close-modal="isModalViewed = false" />
+    <OrderDetailsModal
+      v-if="isModalViewed"
+      :orderDetails="orderForModal"
+      @close-modal="isModalViewed = false"
+      @delete-order="deleteOrder"
+    />
   </div>
 </template>
 
@@ -48,7 +53,8 @@ export default {
   },
   data() {
     return {
-      isModalViewed: false
+      isModalViewed: false,
+      orderForModal: []
     };
   },
   methods: {
@@ -78,6 +84,27 @@ export default {
         }
       } else {
       }
+    },
+    deleteOrder: async function(id) {
+      var index = -1;
+
+      for (var i = 0; i < this.orderList.length; i++) {
+        if (this.orderList[i]._id === id) {
+          index = i;
+          break;
+        }
+      }
+
+      if (index === -1) {
+        throw Error("주문 목록에 존재하지 않는 주문입니다.");
+      }
+
+      this.orderList.splice(index, 1);
+      await this.$emit("delete-order", id);
+    },
+    showModal: function(order) {
+      this.isModalViewed = true;
+      this.orderForModal = order;
     }
   }
 };
@@ -131,7 +158,7 @@ a {
 }
 
 .order-info > span {
-  padding-right: 3px;
+  padding: 10px 10px 0px 0px;
 }
 
 .status {

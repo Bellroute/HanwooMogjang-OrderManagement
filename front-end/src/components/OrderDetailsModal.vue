@@ -12,17 +12,23 @@
           </div>
           <div class="info-detail">
             <div class="detail-main">
-              <span class="item">소고기 구이용 15kg - 15만원</span>
-              <span class="detail-type isDelivery">배송</span>
-              <span class="detail-type isPickup">직접 수령</span>
+              <span class="item">{{orderDetails.item}}</span>
+              <span
+                class="detail-type"
+                :class="{isDelivery: orderDetails.type.includes('배송'), isPickup: orderDetails.type.includes('수령')}"
+              >{{orderDetails.type}}</span>
+            </div>
+            <div>
+              <span class="detail-name">주문 번호:</span>
+              <span class="detail">{{orderDetails._id}}</span>
             </div>
             <div>
               <span class="detail-name">희망 수령 시간:</span>
-              <span class="detail">20:00</span>
+              <span class="detail">{{orderDetails.time}}</span>
             </div>
             <div>
               <span class="detail-name">진행 현황:</span>
-              <span class="detail">준비</span>
+              <span class="detail">{{orderDetails.status}}</span>
             </div>
           </div>
         </div>
@@ -33,11 +39,11 @@
           <div class="info-detail">
             <div>
               <span class="detail-name">주문자명:</span>
-              <span class="detail">벨루트</span>
+              <span class="detail">{{orderDetails.orderName}}</span>
             </div>
             <div>
               <span class="detail-name">연락처:</span>
-              <span class="detail">010-0000-0000</span>
+              <span class="detail">{{orderDetails.orderCallNumber}}</span>
             </div>
           </div>
         </div>
@@ -48,15 +54,11 @@
           <div class="info-detail">
             <div>
               <span class="detail-name">받는 사람:</span>
-              <span class="detail">김피먹</span>
-            </div>
-            <div>
-              <span class="detail-name">연락처:</span>
-              <span class="detail">010-0000-0000</span>
+              <span class="detail">{{orderDetails.recipent}}</span>
             </div>
             <div>
               <span class="detail-name">배송지:</span>
-              <span class="detail">광주 동구 피먹동 200</span>
+              <span class="detail">{{orderDetails.recipientAddress}}</span>
             </div>
           </div>
         </div>
@@ -65,13 +67,13 @@
             <h4>요청 사항</h4>
           </div>
           <div class="info-detail">
-            <div class="detail-name">보냉 박스, 보자기 넣어주세요</div>
+            <div class="detail-name">{{orderDetails.etc}}</div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <span class="btn btn-edit">수정</span>
-        <span class="btn btn-remove">삭제</span>
+        <span class="btn btn-remove" @click="deleteOrder(orderDetails._id)">삭제</span>
         <span class="btn btn-close" @click="$emit('close-modal')">닫기</span>
       </div>
     </div>
@@ -80,7 +82,23 @@
 
 <script>
 export default {
-  name: "OrderDetailsModal"
+  name: "OrderDetailsModal",
+  props: ["orderDetails"],
+  methods: {
+    isDeleted: function() {
+      if (confirm("해당 주문을 삭제하시겠습니까?") === true) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    deleteOrder: function(id) {
+      if (this.isDeleted()) {
+        this.$emit("delete-order", id);
+        this.$emit("close-modal");
+      }
+    }
+  }
 };
 </script>
 
