@@ -28,9 +28,9 @@
               class="order-status"
               @click="changeStatus(order)"
               :class="{
-                isReady: order.status.includes('준비'),
-                isWait: order.status.includes('대기'),
-                isDone: order.status.includes('완료')
+                isReady: order.status === '준비',
+                isWait: order.status === '대기',
+                isDone: order.status === '완료'
               }"
             >
               <p>{{ order.status }}</p>
@@ -135,10 +135,6 @@ export default {
 </script>
 
 <style>
-#empty-order-page {
-  padding: 20px;
-}
-
 ol,
 ul,
 li {

@@ -2,6 +2,7 @@
   <div class="home">
     <h1 style="text-align: center;">주문 진행 현황</h1>
     <DateNavigation v-on:event-data="fetchDate" />
+    <OrderAddButton @add-order="addOrder" />
     <OrderFilter
       :ordersNumber="ordersNumber"
       v-on:filter-status="fetchStatus"
@@ -26,6 +27,7 @@
 import DateNavigation from "@/components/DateNavigation.vue";
 import MainSchedule from "@/components/MainSchedule.vue";
 import OrderFilter from "@/components/OrderFilter.vue";
+import OrderAddButton from "@/components/OrderAddButton.vue";
 import axios from "axios";
 
 export default {
@@ -33,7 +35,8 @@ export default {
   components: {
     DateNavigation,
     MainSchedule,
-    OrderFilter
+    OrderFilter,
+    OrderAddButton
   },
   data() {
     return {
@@ -56,6 +59,11 @@ export default {
         .then(result => {
           console.log(result);
           this.orderList = result.data.orders;
+          this.orderList.sort((a, b) => {
+            if (a.time > b.time) return 1;
+            if (a === b) return a.createdAt - b.createdAt;
+            if (a.time < b.time) return -1;
+          });
           this.ordersNumber = this.orderList.length;
         });
     },
@@ -139,6 +147,13 @@ export default {
       const baseURI = "http://localhost:8080";
 
       axios.put(`${baseURI}/api/orders/` + data._id, data).then(result => {
+        console.log(result);
+      });
+    },
+    addOrder: async function(data) {
+      const baseURI = "http://localhost:8080";
+
+      axios.post(`${baseURI}/api/orders/`, data).then(result => {
         console.log(result);
       });
     }

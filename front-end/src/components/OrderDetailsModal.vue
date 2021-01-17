@@ -98,6 +98,7 @@
           </div>
           <div class="info-detail">
             <div class="detail-main">
+              <span class="detail-name">품목:</span>
               <input
                 id="order-item"
                 type="text"

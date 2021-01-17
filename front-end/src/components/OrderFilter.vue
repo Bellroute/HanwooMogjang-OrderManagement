@@ -129,7 +129,7 @@ export default {
   font-size: 14px;
   margin-left: 10px;
   padding: 5px 10px;
-  position: relative;
+  position: static;
   cursor: pointer;
   border-radius: 20px;
 }

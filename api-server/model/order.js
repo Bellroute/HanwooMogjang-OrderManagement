@@ -18,6 +18,14 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
+orderSchema.statics.createOrder = async function(data) {
+  if (data.type === '배송') {
+    data.time = '배송';
+  }
+  data.status = '준비';
+  return await this.create(data);
+};
+
 orderSchema.statics.findAllByDate = async function(date) {
   return await this.find({ date: date });
 };

@@ -49,18 +49,26 @@ const createOrder = async data => {
   const status = '준비';
 
   try {
-    console.log('db에 저장');
-  } catch (error) {
-    throw Error(error.message);
+    var order = await Order.createOrder(data).then(result => {
+      return result;
+    });
+
+    return order;
+  } catch (err) {
+    console.log(err);
+    throw Error(err.message);
   }
 };
 
 const updateOrder = async (id, data) => {
-  await Order.updateOrder(id, data)
-    .then(result => {
+  try {
+    await Order.updateOrder(id, data).then(result => {
       return result;
-    })
-    .catch(err => console.log(err));
+    });
+  } catch (err) {
+    console.log(err);
+    throw Error(err.message);
+  }
 };
 
 const deleteOrder = async id => {

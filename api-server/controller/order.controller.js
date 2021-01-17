@@ -30,11 +30,10 @@ const getOrder = async (req, res) => {
 
 const createOrder = async (req, res) => {
   try {
-    await orderService.createOrder(req.body);
+    const order = await orderService.createOrder(req.body);
 
     return res.status(201).json({
-      status: 201,
-      message: 'Creation Success'
+      order
     });
   } catch (error) {
     return res.status(500).json({
