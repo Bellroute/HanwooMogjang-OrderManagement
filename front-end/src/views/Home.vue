@@ -163,8 +163,8 @@ export default {
 
 <style>
 .home {
-  margin-left: 15%;
-  margin-right: 15%;
+  margin-left: 5%;
+  margin-right: 5%;
   padding: 3%;
   background: white;
   height: fit-content;

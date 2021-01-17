@@ -73,8 +73,6 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  max-width: 1024px;
-  margin: 0 auto;
 }
 
 .main--order-filter {
@@ -82,8 +80,6 @@ export default {
   justify-content: space-between;
   padding: 15px 20px;
   flex-wrap: wrap;
-  max-width: 1024px;
-  margin: 0 auto;
 }
 
 .main__order-filter ul {
@@ -93,8 +89,6 @@ export default {
   width: 100%;
   box-sizing: content-box;
   padding: 15px;
-  max-width: 1024px;
-  margin: 0 auto;
 }
 
 .main__order-filter ul li {

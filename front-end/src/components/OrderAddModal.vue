@@ -154,7 +154,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .card-title {
   padding: 20px;
   color: black;
@@ -201,7 +201,7 @@ textarea {
   z-index: 10;
   opacity: 1;
   letter-spacing: -1px;
-  height: 100%;
+  max-height: 80%;
   overflow: scroll;
 }
 .info-box {
