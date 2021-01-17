@@ -11,7 +11,7 @@
               :class="{
                 blue: item.today == '토',
                 red: item.today == '일',
-                selected: item.date === selectedDate
+                selected: item.date === selectedDate.date
               }"
               @click="dateShcedules(item)"
             >
@@ -125,19 +125,31 @@ export default {
       var nextDay = addDays(today, i);
 
       items.push({
+        year: nextDay.getFullYear(),
+        month:
+          nextDay.getMonth() + 1 < 10
+            ? "0" + (nextDay.getMonth() + 1)
+            : nextDay.getMonth(),
         date: nextDay.getDate(),
         today: weeks[nextDay.getDay() % 7]
       });
     }
 
     this.dates = items;
-    this.selectedDate = today.getDate();
+    this.selectedDate = {
+      year: today.getFullYear(),
+      month:
+        today.getMonth() + 1 < 10
+          ? "0" + (today.getMonth() + 1)
+          : today.getMonth(),
+      date: today.getDate(),
+      today: weeks[today.getDay() % 7]
+    };
   },
   methods: {
     dateShcedules: function(item) {
-      const selectedDate = item.date;
-      this.selectedDate = selectedDate;
-      this.$emit("event-data", selectedDate);
+      this.selectedDate = item;
+      this.$emit("event-data", this.selectedDate);
     }
   }
 };

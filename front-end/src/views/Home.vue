@@ -10,9 +10,10 @@
     <MainSchedule
       v-if="orderList.length !== 0"
       :orderList="orderList"
-      v-on:change-status-wait="changeStatusWait"
-      v-on:change-status-done="changeStatusDone"
-      v-on:delete-order="deleteOrder"
+      @change-status-wait="changeStatusWait"
+      @change-status-done="changeStatusDone"
+      @delete-order="deleteOrder"
+      @update-order="updateOrder"
     />
     <div id="empty-order-page" v-else>
       <h3>등록된 주문이 없습니다.</h3>
@@ -74,9 +75,19 @@ export default {
       var paramDate = "date=";
       var paramType = "&type=";
       var paramStatus = "&status=";
+      var weeks = ["일", "월", "화", "수", "목", "금", "토"];
 
       if (this.date.length === 0) {
-        this.date = new Date().getDate();
+        var today = new Date();
+        this.date = {
+          year: today.getFullYear(),
+          month:
+            today.getMonth() + 1 < 10
+              ? "0" + (today.getMonth() + 1)
+              : today.getMonth(),
+          date: today.getDate(),
+          today: weeks[today.getDay() % 7]
+        };
       }
       if (this.type.length === 0 || this.type === "전체") {
         paramType = "";
@@ -90,12 +101,15 @@ export default {
       return (
         "?" +
         paramDate +
-        this.date +
+        this.dateToString(this.date) +
         paramType +
         this.type +
         paramStatus +
         this.status
       );
+    },
+    dateToString(date) {
+      return date.year + "-" + date.month + "-" + date.date;
     },
     changeStatusWait: async function(id) {
       const baseURI = "http://localhost:8080";
@@ -119,6 +133,13 @@ export default {
       axios.delete(`${baseURI}/api/orders/` + id).then(result => {
         console.log(result);
         this.ordersNumber = this.orderList.length;
+      });
+    },
+    updateOrder: async function(data) {
+      const baseURI = "http://localhost:8080";
+
+      axios.put(`${baseURI}/api/orders/` + data._id, data).then(result => {
+        console.log(result);
       });
     }
   }

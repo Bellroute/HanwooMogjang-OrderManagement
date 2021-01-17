@@ -29,6 +29,7 @@ html,
 body,
 #app {
   height: 100%;
+  overflow: auto;
   background: whitesmoke;
 }
 

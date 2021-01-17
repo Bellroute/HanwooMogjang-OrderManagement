@@ -85,7 +85,7 @@ const changeStatusToReady = async (req, res) => {
   const id = req.params.id;
 
   try {
-    await orderService.changeStatus(id, 0);
+    await orderService.changeStatus(id, '준비');
 
     return res.status(200).json({
       status: 200,
@@ -103,7 +103,7 @@ const changeStatusToWait = async (req, res) => {
   const id = req.params.id;
 
   try {
-    await orderService.changeStatus(id, 0);
+    await orderService.changeStatus(id, '대기');
 
     return res.status(200).json({
       status: 200,
@@ -121,7 +121,7 @@ const changeStatusToDone = async (req, res) => {
   const id = req.params.id;
 
   try {
-    await orderService.changeStatus(id, 0);
+    await orderService.changeStatus(id, '완료');
 
     return res.status(200).json({
       status: 200,

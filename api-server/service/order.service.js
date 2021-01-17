@@ -56,24 +56,26 @@ const createOrder = async data => {
 };
 
 const updateOrder = async (id, data) => {
-  try {
-    console.log('업데이트');
-  } catch (error) {
-    throw Error(error.message);
-  }
+  await Order.updateOrder(id, data)
+    .then(result => {
+      return result;
+    })
+    .catch(err => console.log(err));
 };
 
 const deleteOrder = async id => {
   try {
-    orders = await Order.delete(id).then(console.log('삭제: id-', id));
+    order = await Order.delete(id).then(console.log('삭제: id-', id));
   } catch (error) {
     throw Error(error.message);
   }
 };
 
-const changeStatus = async (id, typeCode) => {
+const changeStatus = async (id, status) => {
   try {
-    console.log('상태 변경');
+    await Order.changeStatus(id, status).then(result => {
+      return result;
+    });
   } catch (error) {
     throw Error(error.message);
   }

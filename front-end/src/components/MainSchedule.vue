@@ -1,7 +1,11 @@
 <template>
   <div>
     <ul>
-      <li class="list-schedule-item" v-for="(order, i) in orderList" v-bind:key="i">
+      <li
+        class="list-schedule-item"
+        v-for="(order, i) in orderList"
+        v-bind:key="i"
+      >
         <a>
           <div class="order-time">
             <p>{{ order.time }}</p>
@@ -14,7 +18,9 @@
               <span>주문자:</span>
               <span style="font-weight: bold;">{{ order.orderName }}</span>
               <span>연락처:</span>
-              <span style="font-weight: bold;">{{ order.orderCallNumber }}</span>
+              <span style="font-weight: bold;">{{
+                order.orderCallNumber
+              }}</span>
             </div>
           </div>
           <div class="status">
@@ -38,6 +44,7 @@
       :orderDetails="orderForModal"
       @close-modal="isModalViewed = false"
       @delete-order="deleteOrder"
+      @update-order="updateOrder"
     />
   </div>
 </template>
@@ -75,12 +82,12 @@ export default {
           } else {
             order.status = "수령 대기";
           }
-          this.$emit("change-status-wait", order.id);
+          this.$emit("change-status-wait", order._id);
         }
       } else if (order.status.includes("대기")) {
         if (this.isConfirmed()) {
           order.status = "완료";
-          this.$emit("change-status-done", order.id);
+          this.$emit("change-status-done", order._id);
         }
       } else {
       }
@@ -105,6 +112,23 @@ export default {
     showModal: function(order) {
       this.isModalViewed = true;
       this.orderForModal = order;
+    },
+    updateOrder: async function(data) {
+      var index = -1;
+
+      for (var i = 0; i < this.orderList.length; i++) {
+        if (this.orderList[i]._id === data._id) {
+          index = i;
+          break;
+        }
+      }
+
+      if (index === -1) {
+        throw Error("주문 목록에 존재하지 않는 주문입니다.");
+      }
+
+      this.orderList[i] = data;
+      await this.$emit("update-order", data);
     }
   }
 };
