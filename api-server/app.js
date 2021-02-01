@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
 var methodOverride = require('method-override');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 
@@ -45,7 +47,23 @@ app.use(
   })
 );
 
+app.use(
+  session({
+    secret: 'ksdjwv@!!ssz224455mml;/.v',
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection,
+      ttl: 60 * 60 * 6
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 2
+    }
+  })
+);
+
 app.use('/api/orders', require('./routes/order'));
+app.use('/api/auth', require('./routes/auth'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

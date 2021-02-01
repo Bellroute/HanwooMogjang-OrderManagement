@@ -28,7 +28,38 @@ import DateNavigation from "@/components/DateNavigation.vue";
 import MainSchedule from "@/components/MainSchedule.vue";
 import OrderFilter from "@/components/OrderFilter.vue";
 import OrderAddButton from "@/components/OrderAddButton.vue";
+import VueCookies from "vue-cookies";
+import router from "../router/index";
 import axios from "axios";
+
+axios.interceptors.request.use(
+  async function(config) {
+    // Do something before request is sent
+    config.headers.token = VueCookies.get("token");
+
+    console.log(config);
+    return config;
+  },
+  function(error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  function(response) {
+    return response;
+  },
+  async function(error) {
+    console.log("에러일 경우", error.config);
+    if (error.response.data.status === 401) {
+      VueCookies.remove("token");
+      alert("로그인이 만료되었습니다! 다시 로그인해주세요!");
+      router.push("/login");
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default {
   name: "Home",
@@ -47,6 +78,11 @@ export default {
       ordersNumber: 0
     };
   },
+  beforeCreate: function() {
+    if (!this.$session.exists()) {
+      this.$router.push("/login");
+    }
+  },
   mounted() {
     this.getOrderList();
   },
@@ -57,7 +93,6 @@ export default {
       await axios
         .get(`${baseURI}/api/orders` + this.getFilters())
         .then(result => {
-          console.log(result);
           this.orderList = result.data.orders;
           this.orderList.sort((a, b) => {
             if (a.time > b.time) return 1;
@@ -93,7 +128,7 @@ export default {
             today.getMonth() + 1 < 10
               ? "0" + (today.getMonth() + 1)
               : today.getMonth(),
-          date: today.getDate(),
+          date: today.getDate() < 10 ? "0" + today.getDate() : today.getDate(),
           today: weeks[today.getDay() % 7]
         };
       }

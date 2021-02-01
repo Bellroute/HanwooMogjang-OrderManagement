@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema(
   {
-    type: { type: String, required: true },
-    item: { type: String, required: true },
-    date: { type: String, required: true },
+    type: { type: String },
+    item: { type: String },
+    date: { type: String },
     time: { type: String, default: '배송' },
-    orderName: { type: String, required: true },
-    orderCallNumber: { type: String, required: true },
+    orderName: { type: String },
+    orderCallNumber: { type: String },
     recipient: { type: String },
     recipientAddress: { type: String },
     etc: { type: String, default: '' },
-    status: { type: String, required: true }
+    status: { type: String }
   },
   {
     timestamps: true
@@ -31,7 +31,7 @@ orderSchema.statics.findAllByDate = async function(date) {
 };
 
 orderSchema.statics.delete = async function(id) {
-  return await this.remove({ _id: id });
+  return await this.deleteOne({ _id: id });
 };
 
 orderSchema.statics.updateOrder = async function(id, data) {

@@ -130,7 +130,8 @@ export default {
           nextDay.getMonth() + 1 < 10
             ? "0" + (nextDay.getMonth() + 1)
             : nextDay.getMonth(),
-        date: nextDay.getDate(),
+        date:
+          nextDay.getDate() < 10 ? "0" + nextDay.getDate() : nextDay.getDate(),
         today: weeks[nextDay.getDay() % 7]
       });
     }
@@ -142,7 +143,8 @@ export default {
         today.getMonth() + 1 < 10
           ? "0" + (today.getMonth() + 1)
           : today.getMonth(),
-      date: today.getDate(),
+      date:
+        nextDay.getDate() < 10 ? "0" + nextDay.getDate() : nextDay.getDate(),
       today: weeks[today.getDay() % 7]
     };
   },

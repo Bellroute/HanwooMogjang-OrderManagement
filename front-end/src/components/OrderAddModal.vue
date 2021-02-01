@@ -24,21 +24,11 @@
             </div>
             <div>
               <span class="detail-name">희망 수령 날짜:</span>
-              <input
-                id="order-date"
-                type="text"
-                class="detail"
-                v-model="date"
-              />
+              <input id="order-date" type="text" class="detail" v-model="date" />
             </div>
             <div v-if="!isDelivery && selectedType === '직접 수령'">
               <span class="detail-name">희망 수령 시간:</span>
-              <input
-                id="order-time"
-                type="text"
-                class="detail"
-                v-model="time"
-              />
+              <input id="order-time" type="text" class="detail" v-model="time" />
             </div>
           </div>
         </div>
@@ -49,12 +39,7 @@
           <div class="info-detail">
             <div>
               <span class="detail-name">주문자명:</span>
-              <input
-                id="order-orderName"
-                type="text"
-                class="detail"
-                v-model="orderName"
-              />
+              <input id="order-orderName" type="text" class="detail" v-model="orderName" />
             </div>
             <div>
               <span class="detail-name">연락처:</span>
@@ -74,12 +59,7 @@
           <div class="info-detail">
             <div>
               <span class="detail-name">받는 사람:</span>
-              <input
-                id="order-recipient"
-                type="text"
-                class="detail"
-                v-model="recipient"
-              />
+              <input id="order-recipient" type="text" class="detail" v-model="recipient" />
             </div>
             <div>
               <span class="detail-name">배송지:</span>
@@ -170,7 +150,13 @@ export default {
 }
 
 input {
-  width: 50%;
+  border: 1px solid;
+  background-color: white;
+  outline: none;
+  font-family: "Avenir Next", "KoPub Dotum", sans-serif;
+  height: auto;
+  padding: 10px;
+  width: 95%;
 }
 
 textarea {

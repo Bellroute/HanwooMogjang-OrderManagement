@@ -19,8 +19,7 @@
                   isDelivery: orderDetails.type.includes('배송'),
                   isPickup: orderDetails.type.includes('수령')
                 }"
-                >{{ orderDetails.type }}</span
-              >
+              >{{ orderDetails.type }}</span>
             </div>
             <div>
               <span class="detail-name">주문 번호:</span>
@@ -81,9 +80,7 @@
       </div>
       <div class="modal-footer">
         <span class="btn btn-edit" @click="isUpdateView = true">수정</span>
-        <span class="btn btn-remove" @click="deleteOrder(orderDetails._id)"
-          >삭제</span
-        >
+        <span class="btn btn-remove" @click="deleteOrder(orderDetails._id)">삭제</span>
         <span class="btn btn-close" @click="$emit('close-modal')">닫기</span>
       </div>
     </div>
@@ -99,12 +96,7 @@
           <div class="info-detail">
             <div class="detail-main">
               <span class="detail-name">품목:</span>
-              <input
-                id="order-item"
-                type="text"
-                class="item"
-                v-model="orderDetails.item"
-              />
+              <input id="order-item" type="text" class="item" v-model="orderDetails.item" />
             </div>
             <div>
               <span class="detail-name">주문 번호:</span>
@@ -119,21 +111,11 @@
             </div>
             <div>
               <span class="detail-name">희망 수령 날짜:</span>
-              <input
-                id="order-date"
-                type="text"
-                class="detail"
-                v-model="orderDetails.date"
-              />
+              <input id="order-date" type="text" class="detail" v-model="orderDetails.date" />
             </div>
             <div v-if="!isDelivery && selectedType === '직접 수령'">
               <span class="detail-name">희망 수령 시간:</span>
-              <input
-                id="order-time"
-                type="text"
-                class="detail"
-                v-model="orderDetails.time"
-              />
+              <input id="order-time" type="text" class="detail" v-model="orderDetails.time" />
             </div>
             <div>
               <span class="detail-name">진행 현황:</span>
@@ -200,11 +182,7 @@
             <h4>요청 사항</h4>
           </div>
           <div class="info-detail">
-            <textarea
-              id="order-etc"
-              class="detail-name"
-              v-model="orderDetails.etc"
-            />
+            <textarea id="order-etc" class="detail-name" v-model="orderDetails.etc" />
           </div>
         </div>
       </div>
@@ -274,7 +252,13 @@ export default {
 }
 
 input {
-  width: 50%;
+  border: 1px solid;
+  background-color: white;
+  outline: none;
+  font-family: "Avenir Next", "KoPub Dotum", sans-serif;
+  height: auto;
+  padding: 10px;
+  width: 95%;
 }
 
 textarea {

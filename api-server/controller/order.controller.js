@@ -1,6 +1,22 @@
 const orderService = require('../service/order.service');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+const checkAuth = async (req, res) => {
+  try {
+    const token = req.headers['x-access-token'] || req.headers['token'];
+    let jwt_secret = process.env.JWT_SECRET;
+    const decoded = jwt.verify(token, jwt_secret);
+  } catch {
+    res
+      .status(401)
+      .json({ status: 401, message: '권한 없음. 로그인 후 이용해주세요.' });
+  }
+};
 
 const getOrders = async (req, res) => {
+  checkAuth(req, res);
+
   const date = req.query.date;
   const status = req.query.status;
   const type = req.query.type;
@@ -15,6 +31,8 @@ const getOrders = async (req, res) => {
 };
 
 const getOrder = async (req, res) => {
+  checkAuth(req, res);
+
   const id = req.params.id;
 
   try {
@@ -29,6 +47,8 @@ const getOrder = async (req, res) => {
 };
 
 const createOrder = async (req, res) => {
+  checkAuth(req, res);
+
   try {
     const order = await orderService.createOrder(req.body);
 
@@ -44,6 +64,8 @@ const createOrder = async (req, res) => {
 };
 
 const updateOrderDetails = async (req, res) => {
+  checkAuth(req, res);
+
   const id = req.params.id;
   const details = req.body;
 
@@ -63,6 +85,8 @@ const updateOrderDetails = async (req, res) => {
 };
 
 const deleteOrder = async (req, res) => {
+  checkAuth(req, res);
+
   const id = req.params.id;
 
   try {
@@ -81,6 +105,8 @@ const deleteOrder = async (req, res) => {
 };
 
 const changeStatusToReady = async (req, res) => {
+  checkAuth(req, res);
+
   const id = req.params.id;
 
   try {
@@ -99,6 +125,8 @@ const changeStatusToReady = async (req, res) => {
 };
 
 const changeStatusToWait = async (req, res) => {
+  checkAuth(req, res);
+
   const id = req.params.id;
 
   try {
@@ -117,6 +145,8 @@ const changeStatusToWait = async (req, res) => {
 };
 
 const changeStatusToDone = async (req, res) => {
+  checkAuth(req, res);
+
   const id = req.params.id;
 
   try {
